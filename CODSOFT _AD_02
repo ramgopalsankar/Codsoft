@@ -1,0 +1,166 @@
+
+1. HTML Structure
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quote of the Day</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Quote of the Day</h1>
+        <div id="quote-container">
+            <p id="quote-text">Loading...</p>
+            <p id="quote-author">Author</p>
+        </div>
+        <div id="buttons">
+            <button id="new-quote-btn">New Quote</button>
+            <button id="share-quote-btn">Share</button>
+            <button id="favorite-quote-btn">Favorite</button>
+        </div>
+        <div id="favorite-quotes">
+            <h2>Favorite Quotes</h2>
+            <ul id="favorite-quotes-list">
+                <!-- Favorite quotes will be dynamically added here -->
+            </ul>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+
+2. CSS (styles.css)
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    text-align: center;
+}
+
+#quote-container {
+    margin-bottom: 20px;
+}
+
+#quote-text {
+    font-size: 24px;
+    font-style: italic;
+}
+
+#quote-author {
+    margin-top: -10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#buttons {
+    margin-bottom: 20px;
+}
+
+button {
+    margin: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#favorite-quotes {
+    text-align: left;
+}
+
+#favorite-quotes-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#favorite-quotes-list li {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
+
+3. JavaScript (app.js)
+
+const quoteTextElement = document.getElementById('quote-text');
+const quoteAuthorElement = document.getElementById('quote-author');
+const newQuoteButton = document.getElementById('new-quote-btn');
+const shareQuoteButton = document.getElementById('share-quote-btn');
+const favoriteQuoteButton = document.getElementById('favorite-quote-btn');
+const favoriteQuotesList = document.getElementById('favorite-quotes-list');
+
+let currentQuote = {
+    text: '',
+    author: ''
+};
+
+// Sample array of quotes (can be replaced with API call or database)
+const quotes = [
+    { text: "The best way to predict the future is to create it.", author: "Abraham Lincoln" },
+    { text: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
+    { text: "Believe you can and you're halfway there.", author: "Theodore Roosevelt" },
+    { text: "It always seems impossible until it's done.", author: "Nelson Mandela" },
+    { text: "Success is not final, failure is not fatal: It is the courage to continue that counts.", author: "Winston Churchill" },
+    { text: "You miss 100% of the shots you don’t take.", author: "Wayne Gretzky" },
+    { text: "The only limit to our realization of tomorrow will be our doubts of today.", author: "Franklin D. Roosevelt" }
+];
+
+// Function to generate a random quote
+function generateRandomQuote() {
+    const randomIndex = Math.floor(Math.random() * quotes.length);
+    return quotes[randomIndex];
+}
+
+// Function to display a new quote
+function displayNewQuote() {
+    const newQuote = generateRandomQuote();
+    currentQuote = newQuote;
+    quoteTextElement.textContent = newQuote.text;
+    quoteAuthorElement.textContent = newQuote.author;
+}
+
+// Function to share the current quote (dummy implementation)
+function shareQuote() {
+    const shareText = `"${currentQuote.text}" - ${currentQuote.author}`;
+    alert(`Share this quote:\n${shareText}`);
+}
+
+// Function to add the current quote to favorites
+function addToFavorites() {
+    const favoriteQuoteItem = document.createElement('li');
+    favoriteQuoteItem.textContent = `"${currentQuote.text}" - ${currentQuote.author}`;
+    favoriteQuotesList.appendChild(favoriteQuoteItem);
+}
+
+// Event listeners
+newQuoteButton.addEventListener('click', displayNewQuote);
+shareQuoteButton.addEventListener('click', shareQuote);
+favoriteQuoteButton.addEventListener('click', addToFavorites);
+
+// Initial quote display on page load
+displayNewQuote();
