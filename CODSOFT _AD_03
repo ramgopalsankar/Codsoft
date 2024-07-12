@@ -1,0 +1,240 @@
+
+1. HTML Structure
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alarm Clock App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Alarm Clock</h1>
+        <div id="clock">
+            <div id="time"></div>
+            <div id="date"></div>
+        </div>
+        <h2>Set New Alarm</h2>
+        <form id="alarm-form">
+            <label for="alarm-time">Alarm Time:</label>
+            <input type="time" id="alarm-time" required>
+            <label for="alarm-tone">Alarm Tone:</label>
+            <select id="alarm-tone">
+                <option value="tone1">Alarm Tone 1</option>
+                <option value="tone2">Alarm Tone 2</option>
+                <option value="tone3">Alarm Tone 3</option>
+            </select>
+            <button type="submit" id="set-alarm-btn">Set Alarm</button>
+        </form>
+        <h2>Alarms</h2>
+        <div id="alarm-list"></div>
+    </div>
+
+    <audio id="alarm-sound" src="alarm.mp3" preload="auto"></audio>
+    <script src="app.js"></script>
+</body>
+</html>
+
+2. CSS (styles.css)
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    text-align: center;
+}
+
+#clock {
+    margin-bottom: 20px;
+}
+
+#time {
+    font-size: 48px;
+}
+
+#date {
+    font-size: 18px;
+    color: #555;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+form label, form input, form select, form button {
+    margin-bottom: 10px;
+    padding: 8px;
+    font-size: 16px;
+}
+
+form button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #45a049;
+}
+
+#alarm-list {
+    text-align: left;
+}
+
+.alarm {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.alarm button {
+    margin-left: 10px;
+}
+
+3. JavaScript (app.js)
+
+// Data structure to hold alarms
+let alarms = [];
+
+// DOM elements
+const clockTime = document.getElementById('time');
+const clockDate = document.getElementById('date');
+const alarmForm = document.getElementById('alarm-form');
+const alarmTimeInput = document.getElementById('alarm-time');
+const alarmToneInput = document.getElementById('alarm-tone');
+const alarmList = document.getElementById('alarm-list');
+const alarmSound = document.getElementById('alarm-sound');
+
+// Function to display current time and date
+function updateTime() {
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+    const day = now.getDate().toString().padStart(2, '0');
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    const year = now.getFullYear();
+    
+    clockTime.textContent = `${hours}:${minutes}:${seconds}`;
+    clockDate.textContent = `${day}/${month}/${year}`;
+}
+
+// Function to render alarms
+function renderAlarms() {
+    alarmList.innerHTML = '';
+
+    alarms.forEach((alarm, index) => {
+        const alarmItem = document.createElement('div');
+        alarmItem.classList.add('alarm');
+        alarmItem.innerHTML = `
+            <span>${alarm.time}</span>
+            <button onclick="toggleAlarm(${index})">${alarm.active ? 'On' : 'Off'}</button>
+            <button onclick="deleteAlarm(${index})">Delete</button>
+        `;
+        alarmList.appendChild(alarmItem);
+    });
+}
+
+// Function to set a new alarm
+function setAlarm(event) {
+    event.preventDefault();
+
+    const time = alarmTimeInput.value.trim();
+    const tone = alarmToneInput.value;
+
+    if (time === '') {
+        alert('Please select a valid time for the alarm');
+        return;
+    }
+
+    const newAlarm = {
+        time,
+        tone,
+        active: true
+    };
+
+    alarms.push(newAlarm);
+    saveAlarms();
+    alarmForm.reset();
+    renderAlarms();
+}
+
+// Function to toggle alarm on/off
+function toggleAlarm(index) {
+    alarms[index].active = !alarms[index].active;
+    saveAlarms();
+    renderAlarms();
+}
+
+// Function to delete an alarm
+function deleteAlarm(index) {
+    alarms.splice(index, 1);
+    saveAlarms();
+    renderAlarms();
+}
+
+// Function to save alarms to local storage
+function saveAlarms() {
+    localStorage.setItem('alarms', JSON.stringify(alarms));
+}
+
+// Function to load alarms from local storage
+function loadAlarms() {
+    const storedAlarms = JSON.parse(localStorage.getItem('alarms'));
+    if (storedAlarms) {
+        alarms = storedAlarms;
+        renderAlarms();
+    }
+}
+
+// Function to play alarm sound
+function playAlarmSound() {
+    alarmSound.play();
+}
+
+// Function to stop alarm sound
+function stopAlarmSound() {
+    alarmSound.pause();
+    alarmSound.currentTime = 0;
+}
+
+// Initial render
+updateTime();
+loadAlarms();
+setInterval(updateTime, 1000); // Update time every second
+
+// Event listener for setting alarms
+alarmForm.addEventListener('submit', setAlarm);
+
+// Optional: Handle alarm sound (play when active)
+setInterval(() => {
+    const now = new Date();
+    const currentTime = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+
+    alarms.forEach(alarm => {
+        if (alarm.active && alarm.time === currentTime) {
+            playAlarmSound();
+            // Display a notification here (e.g., browser notification or alert)
+        }
+    });
+}, 1000); // Check for alarms every second
