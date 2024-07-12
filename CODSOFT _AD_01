@@ -1,0 +1,203 @@
+
+1.HTML Structure
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>To-Do List</h1>
+        <div id="task-list"></div>
+        <form id="task-form">
+            <input type="text" id="task-title" placeholder="Enter task title" required>
+            <textarea id="task-description" placeholder="Enter task description"></textarea>
+            <select id="priority">
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+            <input type="date" id="due-date">
+            <button type="submit" id="add-task-btn">Add Task</button>
+        </form>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+
+ 2.CSS (styles.css)
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+}
+
+h1 {
+    text-align: center;
+}
+
+#task-list {
+    margin-bottom: 20px;
+}
+
+.task {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task button {
+    margin-left: 10px;
+}
+
+.completed {
+    text-decoration: line-through;
+    color: #999;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form input, form textarea, form select, form button {
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+form button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #45a049;
+}
+
+3. JavaScript (app.js)
+
+// Retrieve task list from local storage
+let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+const taskList = document.getElementById('task-list');
+const taskForm = document.getElementById('task-form');
+const taskTitleInput = document.getElementById('task-title');
+const taskDescriptionInput = document.getElementById('task-description');
+const priorityInput = document.getElementById('priority');
+const dueDateInput = document.getElementById('due-date');
+
+// Function to render tasks
+function renderTasks() {
+    taskList.innerHTML = '';
+
+    tasks.forEach((task, index) => {
+        const taskItem = document.createElement('div');
+        taskItem.classList.add('task');
+        if (task.completed) {
+            taskItem.classList.add('completed');
+        }
+        taskItem.innerHTML = `
+            <span>${task.title}</span>
+            <div>
+                <button onclick="toggleTaskCompletion(${index})">${task.completed ? 'Undo' : 'Complete'}</button>
+                <button onclick="editTask(${index})">Edit</button>
+                <button onclick="deleteTask(${index})">Delete</button>
+            </div>
+        `;
+        taskList.appendChild(taskItem);
+    });
+}
+
+// Function to add a new task
+function addTask(event) {
+    event.preventDefault();
+    
+    const title = taskTitleInput.value.trim();
+    const description = taskDescriptionInput.value.trim();
+    const priority = priorityInput.value;
+    const dueDate = dueDateInput.value;
+    
+    if (title === '') {
+        alert('Please enter a task title');
+        return;
+    }
+    
+    const newTask = {
+        title,
+        description,
+        priority,
+        dueDate,
+        completed: false
+    };
+    
+    tasks.push(newTask);
+    saveTasks();
+    taskForm.reset();
+    renderTasks();
+}
+
+// Function to edit a task
+function editTask(index) {
+    const editedTitle = prompt('Enter new title:', tasks[index].title);
+    if (editedTitle !== null) {
+        tasks[index].title = editedTitle;
+        saveTasks();
+        renderTasks();
+    }
+}
+
+// Function to toggle task completion
+function toggleTaskCompletion(index) {
+    tasks[index].completed = !tasks[index].completed;
+    saveTasks();
+    renderTasks();
+}
+
+// Function to delete a task
+function deleteTask(index) {
+    const confirmation = confirm(`Are you sure you want to delete "${tasks[index].title}"?`);
+    if (confirmation) {
+        tasks.splice(index, 1);
+        saveTasks();
+        renderTasks();
+    }
+}
+
+// Function to save tasks to local storage
+function saveTasks() {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+// Initial render
+renderTasks();
+
+// Event listener for adding tasks
+taskForm.addEventListener('submit', addTask);
