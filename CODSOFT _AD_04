@@ -1,0 +1,73 @@
+
+   
+   import javax.swing.*;
+   import java.awt.*;
+   import java.awt.event.ActionEvent;
+   import java.awt.event.ActionListener;
+   
+
+   public class NotificationWindow extends JFrame {
+
+       public NotificationWindow(String title, String message, ImageIcon icon) {
+           // Set up the frame
+           setTitle(title);
+           setSize(300, 150);
+           setLocationRelativeTo(null); // Center the window
+           setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+           setLayout(new BorderLayout());
+           setUndecorated(true); // Remove window decorations
+
+           // Create components
+           JLabel messageLabel = new JLabel(message, SwingConstants.CENTER);
+           messageLabel.setFont(new Font("Arial", Font.BOLD, 14));
+           if (icon != null) {
+               JLabel iconLabel = new JLabel(icon);
+               add(iconLabel, BorderLayout.WEST);
+           }
+           add(messageLabel, BorderLayout.CENTER);
+
+           // Add a button to close the notification
+           JButton closeButton = new JButton("Close");
+           closeButton.addActionListener(new ActionListener() {
+               @Override
+               public void actionPerformed(ActionEvent e) {
+                   dispose(); // Close the window
+               }
+           });
+           add(closeButton, BorderLayout.SOUTH);
+       }
+   }
+   
+
+  
+   public class NotificationDemo {
+
+       public static void main(String[] args) {
+           SwingUtilities.invokeLater(new Runnable() {
+               @Override
+               public void run() {
+                   // Create an icon (optional)
+                   ImageIcon icon = new ImageIcon("path/to/icon.png"); // Update the path to your icon
+
+                   // Create the notification window
+                   NotificationWindow notification = new NotificationWindow(
+                       "Notification Title",
+                       "This is a notification message.",
+                       icon
+                   );
+
+                   // Display the notification
+                   notification.setVisible(true);
+               }
+           });
+       }
+   }
+
+   messageLabel.setFont(new Font("Arial", Font.BOLD, 16));
+   messageLabel.setForeground(Color.BLUE);
+
+   try {
+       // Code to create and display the notification
+   } catch (Exception e) {
+       e.printStackTrace(); // Handle exceptions
+   }
