@@ -1,73 +1,70 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-   
-   import javax.swing.*;
-   import java.awt.*;
-   import java.awt.event.ActionEvent;
-   import java.awt.event.ActionListener;
-   
+public class NotificationWindow {
+    private JFrame frame;
+    private JLabel titleLabel;
+    private JLabel messageLabel;
+    private JLabel iconLabel;
+    private JButton closeButton;
 
-   public class NotificationWindow extends JFrame {
+    public NotificationWindow(String title, String message, ImageIcon icon) {
+        frame = new JFrame("Notification");
+        frame.setLayout(new BorderLayout(10, 10)); // Added padding between components
+        frame.setSize(300, 150);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Use DISPOSE_ON_CLOSE to close only the window
 
-       public NotificationWindow(String title, String message, ImageIcon icon) {
-           // Set up the frame
-           setTitle(title);
-           setSize(300, 150);
-           setLocationRelativeTo(null); // Center the window
-           setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-           setLayout(new BorderLayout());
-           setUndecorated(true); // Remove window decorations
+        titleLabel = new JLabel(title, SwingConstants.CENTER); // Centered the text
+        messageLabel = new JLabel(message, SwingConstants.CENTER); // Centered the text
+        iconLabel = new JLabel(icon, SwingConstants.CENTER); // Centered the icon
 
-           // Create components
-           JLabel messageLabel = new JLabel(message, SwingConstants.CENTER);
-           messageLabel.setFont(new Font("Arial", Font.BOLD, 14));
-           if (icon != null) {
-               JLabel iconLabel = new JLabel(icon);
-               add(iconLabel, BorderLayout.WEST);
-           }
-           add(messageLabel, BorderLayout.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        messageLabel.setFont(new Font("Arial", Font.PLAIN, 14));
 
-           // Add a button to close the notification
-           JButton closeButton = new JButton("Close");
-           closeButton.addActionListener(new ActionListener() {
-               @Override
-               public void actionPerformed(ActionEvent e) {
-                   dispose(); // Close the window
-               }
-           });
-           add(closeButton, BorderLayout.SOUTH);
-       }
-   }
-   
+        closeButton = new JButton("Close");
+        closeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+            }
+        });
 
-  
-   public class NotificationDemo {
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.add(titleLabel, BorderLayout.NORTH);
+        panel.add(messageLabel, BorderLayout.CENTER);
+        if (icon != null) {
+            panel.add(iconLabel, BorderLayout.WEST); // Add icon to the west side
+        }
 
-       public static void main(String[] args) {
-           SwingUtilities.invokeLater(new Runnable() {
-               @Override
-               public void run() {
-                   // Create an icon (optional)
-                   ImageIcon icon = new ImageIcon("path/to/icon.png"); // Update the path to your icon
+        frame.add(panel, BorderLayout.CENTER);
+        frame.add(closeButton, BorderLayout.SOUTH);
 
-                   // Create the notification window
-                   NotificationWindow notification = new NotificationWindow(
-                       "Notification Title",
-                       "This is a notification message.",
-                       icon
-                   );
+        frame.setLocationRelativeTo(null); // Center the window
+    }
 
-                   // Display the notification
-                   notification.setVisible(true);
-               }
-           });
-       }
-   }
+    public void display() {
+        frame.setVisible(true);
+    }
 
-   messageLabel.setFont(new Font("Arial", Font.BOLD, 16));
-   messageLabel.setForeground(Color.BLUE);
-
-   try {
-       // Code to create and display the notification
-   } catch (Exception e) {
-       e.printStackTrace(); // Handle exceptions
-   }
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                ImageIcon icon = null;
+                try {
+                    icon = new ImageIcon("path/to/icon.png");
+                } catch (Exception e) {
+                    System.out.println("Icon not found or invalid path.");
+                }
+                NotificationWindow notification = new NotificationWindow(
+                    "Sample Title",
+                    "This is a sample message.",
+                    icon
+                );
+                notification.display();
+            }
+        });
+    }
+}
