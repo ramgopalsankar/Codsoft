@@ -1,0 +1,148 @@
+1.HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Menu</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header>
+        <h1>Delicious Eats</h1>
+        <p>Welcome to our restaurant! Browse through our menu and pick your favorite dish.</p>
+    </header>
+
+    <section class="menu">
+        <div class="category">
+            <h2>Starters</h2>
+            <div class="menu-item">
+                <h3>Bruschetta</h3>
+                <p>Grilled bread topped with fresh tomatoes and basil - $6.99</p>
+            </div>
+            <div class="menu-item">
+                <h3>Stuffed Mushrooms</h3>
+                <p>Cheese-stuffed mushrooms baked to perfection - $8.50</p>
+            </div>
+        </div>
+
+        <div class="category">
+            <h2>Main Courses</h2>
+            <div class="menu-item">
+                <h3>Grilled Salmon</h3>
+                <p>Freshly grilled salmon with a lemon butter sauce - $15.99</p>
+            </div>
+            <div class="menu-item">
+                <h3>Spaghetti Carbonara</h3>
+                <p>Pasta with creamy sauce and bacon - $12.99</p>
+            </div>
+        </div>
+
+        <div class="category">
+            <h2>Desserts</h2>
+            <div class="menu-item">
+                <h3>Tiramisu</h3>
+                <p>A classic Italian dessert with layers of coffee-soaked sponge - $5.50</p>
+            </div>
+            <div class="menu-item">
+                <h3>Chocolate Lava Cake</h3>
+                <p>Rich chocolate cake with a molten center - $6.50</p>
+            </div>
+        </div>
+
+        <div class="category">
+            <h2>Beverages</h2>
+            <div class="menu-item">
+                <h3>Fresh Lemonade</h3>
+                <p>Chilled lemonade made from freshly squeezed lemons - $3.50</p>
+            </div>
+            <div class="menu-item">
+                <h3>Coffee</h3>
+                <p>Freshly brewed hot coffee - $2.50</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Delicious Eats. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
+
+2.CSS
+/* styles.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f8f8;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    text-align: center;
+    background-color: #2b2b2b;
+    color: white;
+    padding: 20px;
+}
+
+h1 {
+    margin: 0;
+    font-size: 3em;
+}
+
+p {
+    font-size: 1.2em;
+}
+
+.menu {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: 20px;
+}
+
+.category {
+    background-color: #fff;
+    width: 300px;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    border-bottom: 2px solid #2b2b2b;
+    padding-bottom: 10px;
+    color: #2b2b2b;
+    font-size: 2em;
+}
+
+.menu-item {
+    margin: 15px 0;
+}
+
+h3 {
+    margin: 0;
+    color: #2b2b2b;
+    font-size: 1.5em;
+}
+
+.menu-item p {
+    margin: 5px 0;
+    color: #555;
+}
+
+footer {
+    text-align: center;
+    background-color: #2b2b2b;
+    color: white;
+    padding: 20px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+
