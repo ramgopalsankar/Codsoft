@@ -1,0 +1,117 @@
+1.HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple E-Commerce Website</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>My E-Commerce Store</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <input type="text" id="search" placeholder="Search products...">
+    </header>
+
+    <main>
+        <section id="products">
+            <h2>Products</h2>
+            <div class="product" data-category="electronics">
+                <h3>Smartphone</h3>
+                <p>$499</p>
+            </div>
+            <div class="product" data-category="clothing">
+                <h3>Jeans</h3>
+                <p>$79</p>
+            </div>
+            <!-- Add more products here -->
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 My E-Commerce Store</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+2.CSS
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 10px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+#search {
+    margin-top: 10px;
+    padding: 5px;
+}
+
+main {
+    padding: 20px;
+}
+
+.product {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+3.Javascript
+document.getElementById('search').addEventListener('input', function() {
+    const query = this.value.toLowerCase();
+    const products = document.querySelectorAll('.product');
+    
+    products.forEach(product => {
+        const productName = product.querySelector('h3').textContent.toLowerCase();
+        if (productName.includes(query)) {
+            product.style.display = 'block';
+        } else {
+            product.style.display = 'none';
+        }
+    });
+});
