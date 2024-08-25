@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email Template</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+    }
+
+    .email-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      border: 1px solid #e0e0e0;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #333333;
+      text-align: center;
+    }
+
+    p {
+      color: #666666;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    a {
+      color: #1e90ff;
+      text-decoration: none;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #1e90ff;
+      color: #ffffff;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 5px;
+      margin: 20px 0;
+      font-size: 18px;
+    }
+
+    /* Responsive Styles */
+    @media only screen and (max-width: 600px) {
+      .email-container {
+        width: 100%;
+        padding: 10px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      p {
+        font-size: 14px;
+      }
+
+      .cta-button {
+        font-size: 16px;
+        padding: 8px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="email-container">
+    <h1>Email Template Demo</h1>
+    <p>An email template is a pre-designed email that can be used to send out marketing or promotional emails. The goal of a good email template is to make it easy and quick for businesses to send out emails that look professional and engaging.</p>
+
+    <a href="#" class="cta-button">FOR DEMO CLICK HERE</a>
+
+    <h2>Visually appealing</h2>
+    <p>The email template should be visually appealing and easy to read. The use of colors, fonts, and images should be carefully considered to create a visually appealing email.</p>
+
+    <h2>Easy to use</h2>
+    <p>The email template should be easy to use and navigate. The user should be able to easily find the necessary information and make changes to the template.</p>
+
+    <h2>Responsive</h2>
+    <p>The email template should be responsive, so that it looks good on all devices, including desktop computers, laptops, tablets, and smartphones.</p>
+  </div>
+
+</body>
+</html>
+
+
